@@ -1,0 +1,6 @@
+[submodule "DjangoHallow"]
+	path = DjangoHallow
+	url = https://github.com/Ky7az/DjangoHallow
+[submodule "vue_hallow"]
+	path = vue_hallow
+	url = https://github.com/Ky7az/vue_hallow
