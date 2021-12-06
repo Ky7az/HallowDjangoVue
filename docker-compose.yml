@@ -1,0 +1,50 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:14.1-alpine
+    volumes:
+      - ./postgres_data:/var/lib/postgresql/data
+    env_file:
+      - ./.env
+    restart: always
+    ports:
+      - "5432:5432"
+
+  django:
+    build:
+      context: ./DjangoHallow
+      dockerfile: ./Dockerfile      
+    volumes:
+      - django_static:/app/static
+    env_file:
+      - ./DjangoHallow/.env
+    depends_on:
+      - db
+
+  vue:
+    build:
+      context: ./vue_hallow
+      dockerfile: ./Dockerfile
+    volumes:
+      - vue_dst:/app/dist
+    depends_on:
+      - django
+
+  nginx:
+    build:
+      context: ./nginx
+      dockerfile: ./Dockerfile
+    volumes:
+      - django_static:/usr/share/nginx/html/static
+      - vue_dst:/usr/share/nginx/html
+    restart: always
+    ports:
+      - "80:80"
+    depends_on: 
+      - django
+      - vue
+
+volumes:
+  django_static:
+  vue_dst:
