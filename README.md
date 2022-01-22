@@ -34,8 +34,4 @@ Edit *vue_hallow/src/storage/service.js*, change the *API_HOST* const with your 
 ## Build Containers
 ```
 docker-compose up -d --build
-
-docker exec -it hallowdjangovue_django /bin/sh
-/app # python manage.py migrate
-/app # python manage.py createsuperuser --username=your_username --email=your_email
 ```
