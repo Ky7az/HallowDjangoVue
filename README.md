@@ -24,6 +24,7 @@ DB_USER=your_db_user
 DB_PASSWORD=your_db_password
 DB_HOST=db
 DB_PORT=5432
+CELERY_BROKER=redis://redis:6379/0
 ```
 
 ## Update Domain Name

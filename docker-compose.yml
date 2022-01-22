@@ -12,15 +12,27 @@ services:
       - "5432:5432"
 
   django:
-    build:
-      context: ./DjangoHallow
-      dockerfile: ./Dockerfile      
+    build: ./DjangoHallow
+    command: gunicorn --bind :8000 --workers 3 DjangoHallow.wsgi 
     volumes:
       - django_static:/app/static
     env_file:
       - ./DjangoHallow/.env
     depends_on:
       - db
+      - redis
+
+  celery:
+    build: ./DjangoHallow
+    command: celery -A DjangoHallow worker -l info
+    depends_on:
+      - django
+      - redis
+
+  redis:
+    image: redis:6.2.6-alpine
+    volumes:
+      - ./redis_data:/data
 
   vue:
     build:
