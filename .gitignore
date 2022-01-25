@@ -1,3 +1,4 @@
 .env
+.vscode/
 /postgres_data
 /backup
