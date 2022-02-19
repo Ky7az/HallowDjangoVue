@@ -1,4 +1,5 @@
 .env
 .vscode/
 /postgres_data
+/redis_data
 /backup
