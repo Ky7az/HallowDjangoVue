@@ -1,8 +1,11 @@
-# HallowDjangoVue
+# Hallow Ethical Hacking
+
+Soup (Knowledge Base)  
+Pentest (Penetration Testing Lab)  
 
 ## Clone Repository
 ```
-git clone --recursive https://github.com/Ky7az/HallowDjangoVue
+git clone --recursive https://github.com/Ky7az/hallow-ethical-hacking
 ```
 
 ## Create Environment Files
