@@ -12,19 +12,19 @@ services:
       - "5432:5432"
 
   django:
-    build: ./DjangoHallow
-    command: gunicorn --bind :8000 --workers 3 DjangoHallow.wsgi 
+    build: ./django-hallow-ethical-hacking
+    command: gunicorn --bind :8000 --workers 3 DjangoHallowEthicalHacking.wsgi 
     volumes:
       - django_static:/app/static
     env_file:
-      - ./DjangoHallow/.env
+      - ./django-hallow-ethical-hacking/.env
     depends_on:
       - db
       - redis
 
   celery:
-    build: ./DjangoHallow
-    command: celery -A DjangoHallow worker -l info
+    build: ./django-hallow-ethical-hacking
+    command: celery -A DjangoHallowEthicalHacking worker -l info
     depends_on:
       - django
       - redis
@@ -36,7 +36,7 @@ services:
 
   vue:
     build:
-      context: ./vue_hallow
+      context: ./vue-hallow-ethical-hacking
       dockerfile: ./Dockerfile
     volumes:
       - vue_dst:/app/dist
