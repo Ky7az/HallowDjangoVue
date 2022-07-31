@@ -2,6 +2,7 @@
 
 Soup (Knowledge Base)  
 Pentest (Penetration Testing Helper)  
+Writeup (Report Creator)  
 
 ## Clone Repository
 ```
