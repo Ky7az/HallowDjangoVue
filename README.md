@@ -12,6 +12,8 @@ git clone --recursive https://github.com/Ky7az/hallow-ethical-hacking
 ## Create Environment Files
 Create *.env* file here
 ```
+DOMAIN=your_domain_name
+EMAIL=your_email
 POSTGRES_USER=your_db_user
 POSTGRES_PASSWORD=your_db_password
 POSTGRES_DB=your_db_name
@@ -37,5 +39,6 @@ Edit *vue-hallow-ethical-hacking/src/storage/service.js*, change the *API_HOST* 
 
 ## Build Containers
 ```
+docker network create proxy
 docker-compose up -d --build
 ```

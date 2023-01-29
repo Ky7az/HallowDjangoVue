@@ -1,6 +1,33 @@
 version: '3.8'
 
 services:
+
+  traefik:
+    image: traefik:2.9.6
+    command:
+      - --entrypoints.http.address=:80
+      - --entrypoints.https.address=:443
+      - --providers.docker=true
+      - --providers.docker.network=proxy
+
+      - --certificatesresolvers.letsencrypt.acme.httpchallenge=true
+      - --certificatesresolvers.letsencrypt.acme.httpchallenge.entrypoint=http
+      - --certificatesresolvers.letsencrypt.acme.email=${EMAIL}
+      - --certificatesresolvers.letsencrypt.acme.storage=/letsencrypt/acme.json
+    labels:
+      - traefik.http.routers.to-https.rule=HostRegexp(`{host:.+}`)
+      - traefik.http.routers.to-https.entrypoints=http
+      - traefik.http.routers.to-https.middlewares=to-https
+      - traefik.http.middlewares.to-https.redirectscheme.scheme=https
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ./letsencrypt_data:/letsencrypt
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    networks:
+      - proxy
+
   db:
     image: postgres:14.5-alpine
     volumes:
@@ -10,6 +37,10 @@ services:
     restart: always
     ports:
       - "5432:5432"
+    labels:
+      - traefik.enable=false
+    networks:
+      - proxy
 
   django:
     build: ./django-hallow-ethical-hacking
@@ -21,6 +52,10 @@ services:
     depends_on:
       - db
       - redis
+    labels:
+      - traefik.enable=false
+    networks:
+      - proxy
 
   celery:
     build: ./django-hallow-ethical-hacking
@@ -28,11 +63,19 @@ services:
     depends_on:
       - django
       - redis
+    labels:
+      - traefik.enable=false
+    networks:
+      - proxy
 
   redis:
     image: redis:7.0.5-alpine
     volumes:
       - ./redis_data:/data
+    labels:
+      - traefik.enable=false
+    networks:
+      - proxy
 
   vue:
     build:
@@ -42,6 +85,10 @@ services:
       - vue_dst:/app/dist
     depends_on:
       - django
+    labels:
+      - traefik.enable=false
+    networks:
+      - proxy
 
   nginx:
     build:
@@ -51,12 +98,24 @@ services:
       - django_static:/usr/share/nginx/html/static
       - vue_dst:/usr/share/nginx/html
     restart: always
-    ports:
-      - "80:80"
     depends_on: 
       - django
       - vue
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.nginx.rule=Host(`${DOMAIN}`)
+      - traefik.http.routers.nginx.entrypoints=https
+      - traefik.http.routers.nginx.tls=true
+      - traefik.http.routers.nginx.tls.certresolver=letsencrypt
+      - traefik.http.services.nginx.loadbalancer.server.port=80
+      - traefik.docker.network=proxy
+    networks:
+      - proxy
 
 volumes:
   django_static:
   vue_dst:
+
+networks:
+  proxy:
+    external: true

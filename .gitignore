@@ -1,5 +1,6 @@
 .env
 .vscode/
+/letsencrypt_data
 /postgres_data
 /redis_data
 /backup
