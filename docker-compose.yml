@@ -4,6 +4,7 @@ services:
 
   traefik:
     image: traefik:2.9.6
+    container_name: traefik
     command:
       - --entrypoints.http.address=:80
       - --entrypoints.https.address=:443
@@ -30,6 +31,7 @@ services:
 
   db:
     image: postgres:14.5-alpine
+    container_name: db
     volumes:
       - ./postgres_data:/var/lib/postgresql/data
     env_file:
@@ -44,6 +46,7 @@ services:
 
   django:
     build: ./django-hallow-ethical-hacking
+    container_name: django
     command: gunicorn --bind :8000 --workers 3 DjangoHallowEthicalHacking.wsgi 
     volumes:
       - django_static:/app/static
@@ -59,7 +62,20 @@ services:
 
   celery:
     build: ./django-hallow-ethical-hacking
+    container_name: celery
     command: celery -A DjangoHallowEthicalHacking worker -l info
+    depends_on:
+      - django
+      - redis
+    labels:
+      - traefik.enable=false
+    networks:
+      - proxy
+
+  celery-beat:
+    build: ./django-hallow-ethical-hacking
+    container_name: celery-beat
+    command: celery -A DjangoHallowEthicalHacking beat -l info
     depends_on:
       - django
       - redis
@@ -70,6 +86,7 @@ services:
 
   redis:
     image: redis:7.0.5-alpine
+    container_name: redis
     volumes:
       - ./redis_data:/data
     labels:
@@ -81,6 +98,7 @@ services:
     build:
       context: ./vue-hallow-ethical-hacking
       dockerfile: ./Dockerfile
+    container_name: vue
     volumes:
       - vue_dst:/app/dist
     depends_on:
@@ -94,6 +112,7 @@ services:
     build:
       context: ./nginx
       dockerfile: ./Dockerfile
+    container_name: nginx
     volumes:
       - django_static:/usr/share/nginx/html/static
       - vue_dst:/usr/share/nginx/html
