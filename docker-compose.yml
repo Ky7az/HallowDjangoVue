@@ -3,7 +3,7 @@ version: '3.8'
 services:
 
   traefik:
-    image: traefik:2.9.6
+    image: traefik:2.9.9
     container_name: traefik
     command:
       - --entrypoints.http.address=:80
@@ -30,7 +30,7 @@ services:
       - proxy
 
   db:
-    image: postgres:14.5-alpine
+    image: postgres:14.7-alpine
     container_name: db
     volumes:
       - ./postgres_data:/var/lib/postgresql/data
@@ -85,7 +85,7 @@ services:
       - proxy
 
   redis:
-    image: redis:7.0.5-alpine
+    image: redis:7.0.10-alpine
     container_name: redis
     volumes:
       - ./redis_data:/data
