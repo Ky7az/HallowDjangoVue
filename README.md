@@ -38,8 +38,7 @@ CELERY_BROKER=redis://redis:6379/0
 Edit *nginx/hallow.conf*, change the *server_name* directive with your domain name.  
 Edit *vue-hallow-ethical-hacking/src/storage/service.js*, change the *API_HOST* const with your domain name.
 
-## Build Containers
+## Build/Run Containers
 ```
-docker network create proxy
 docker-compose up -d --build
 ```
