@@ -31,7 +31,7 @@ DB_USER=your_db_user
 DB_PASSWORD=your_db_password
 DB_HOST=db
 DB_PORT=5432
-CELERY_BROKER=redis://redis:6379/0
+REDIS_URL=redis://redis:6379
 ```
 
 ## Update Domain Name
@@ -46,7 +46,7 @@ docker compose up -d --build
 ## Create Superuser
 ```
 docker exec -it django /bin/sh
-python manage.py createsuperuser
+python3 manage.py createsuperuser
 ```
 
 ## Shortcuts
