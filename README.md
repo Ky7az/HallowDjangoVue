@@ -11,7 +11,7 @@ git clone --recursive https://github.com/Ky7az/hallow-ethical-hacking
 ```
 
 ## Create Environment Files
-Create *.env* file here
+Create `.env` file here
 ```
 DOMAIN=your_domain_name
 EMAIL=your_email
@@ -20,7 +20,7 @@ POSTGRES_PASSWORD=your_db_password
 POSTGRES_DB=your_db_name
 ```
 
-Create *.env* file into *django-hallow-ethical-hacking*
+Create `.env` file into *django-hallow-ethical-hacking*
 ```
 DEBUG=False
 SECRET_KEY=your_secret_key
@@ -35,10 +35,22 @@ CELERY_BROKER=redis://redis:6379/0
 ```
 
 ## Update Domain Name
-Edit *nginx/hallow.conf*, change the *server_name* directive with your domain name.  
-Edit *vue-hallow-ethical-hacking/src/storage/service.js*, change the *API_HOST* const with your domain name.
+Edit `nginx/hallow.conf`, change the `server_name` directive with your domain name.  
+Edit `vue-hallow-ethical-hacking/src/storage/service.js`, change the `API_HOST` const with your domain name.
 
 ## Build/Run Containers
 ```
-docker-compose up -d --build
+docker compose up -d --build
+```
+
+## Create Superuser
+```
+docker exec -it django /bin/sh
+python manage.py createsuperuser
+```
+
+## Shortcuts
+```
+Ctrl-E : Edit/Preview (Soup, Writeup)  
+Ctrl-C : Copy (Pentest)
 ```
