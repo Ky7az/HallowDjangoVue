@@ -41,15 +41,8 @@ Edit `vue-hallow-ethical-hacking/src/storage/service.js`, change the `API_HOST` 
 
 ## Build/Run Containers
 
-### Traefik
 ```
-$ cd trafik
 $ docker network create proxy
-$ docker compose up -d --build
-```
-
-### Hallow
-```
 $ docker compose up -d --build
 ```
 
@@ -66,9 +59,9 @@ Ctrl-C : Copy (Pentest)
 ```
 
 ## Todo
-- Update Django to next LTS version (4.2)
-- Update Vue.js to next LTS version (3.4.x)
-- Update Node.js to next LTS version (20.11.x)
-- Add support to more watch sources
-- Add more preconfigured pentest actions/commands
-- Better handle exceptions/errors on frontend
+Update Django to next LTS version (4.2)  
+Update Vue.js to next LTS version (3.4.x)  
+Update Node.js to next LTS version (20.11.x)  
+Add support to more watch sources  
+Add more preconfigured pentest actions/commands  
+Better handle exceptions/errors on frontend
