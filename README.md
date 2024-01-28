@@ -7,7 +7,7 @@ Writeup (Report Creator)
 
 ## Clone Repository
 ```
-git clone --recursive https://github.com/Ky7az/hallow-ethical-hacking
+$ git clone --recursive https://github.com/Ky7az/hallow-ethical-hacking
 ```
 
 ## Create Environment Files
@@ -38,15 +38,25 @@ REDIS_URL=redis://redis:6379
 Edit `nginx/hallow.conf`, change the `server_name` directive with your domain name.  
 Edit `vue-hallow-ethical-hacking/src/storage/service.js`, change the `API_HOST` const with your domain name.
 
+
 ## Build/Run Containers
+
+### Traefik
 ```
-docker compose up -d --build
+$ cd trafik
+$ docker network create proxy
+$ docker compose up -d --build
+```
+
+### Hallow
+```
+$ docker compose up -d --build
 ```
 
 ## Create Superuser
 ```
-docker exec -it django /bin/sh
-python3 manage.py createsuperuser
+$ docker exec -it django /bin/sh
+$ python3 manage.py createsuperuser
 ```
 
 ## Shortcuts
@@ -54,3 +64,11 @@ python3 manage.py createsuperuser
 Ctrl-E : Edit/Preview (Soup, Writeup)  
 Ctrl-C : Copy (Pentest)
 ```
+
+## Todo
+- Update Django to next LTS version (4.2)
+- Update Vue.js to next LTS version (3.4.x)
+- Update Node.js to next LTS version (20.11.x)
+- Add support to more watch sources
+- Add more preconfigured pentest actions/commands
+- Better handle exceptions/errors on frontend
