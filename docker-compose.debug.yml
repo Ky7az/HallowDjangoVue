@@ -1,9 +1,7 @@
-version: '3.8'
-
 services:
 
   db:
-    image: postgres:14.11-alpine
+    image: postgres:14.13-alpine
     container_name: db
     volumes:
       - ./postgres_data:/var/lib/postgresql/data
@@ -51,7 +49,7 @@ services:
       - internal
 
   redis:
-    image: redis:7.2.4-alpine
+    image: redis:7.4.1-alpine
     container_name: redis
     volumes:
       - ./redis_data:/data
