@@ -1,5 +1,4 @@
 # HallowEthicalHacking
-
 Soup (Knowledge Base)  
 Watch (Security/Technology Watch)  
 Pentest (Penetration Testing Helper)  
@@ -40,7 +39,6 @@ Edit `vue-hallow-ethical-hacking/src/storage/service.js`, change the `API_HOST` 
 
 
 ## Build/Run Containers
-
 ```
 $ docker network create proxy
 $ docker compose up -d --build
@@ -59,7 +57,6 @@ Ctrl-C : Copy (Pentest)
 ```
 
 ## Todo
-- Migrate from Vue CLI to Vite
 - Migrate from Vuex to Pinia
 - Add support to more watch sources  
 - Add more preconfigured pentest actions/commands  
