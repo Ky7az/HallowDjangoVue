@@ -61,10 +61,24 @@ services:
       context: ./vue-hallow-ethical-hacking
       dockerfile: ./Dockerfile
     container_name: vue
-    volumes:
-      - vue_dst:/app/dist
+    command: yarn dev
+    develop:
+      watch:
+        - action: rebuild
+          path: ./vue-hallow-ethical-hacking/package.json
+          target: /app/package.json
+        - action: sync
+          path: ./vue-hallow-ethical-hacking
+          target: /app
+          ignore:
+            - node_modules
+        - action: sync+restart
+          path: ./vue-hallow-ethical-hacking/vite.config.js
+          target: /app/vite.config.js
     depends_on:
       - django
+    ports:
+      - 5173:5173
     networks:
       - internal
 
@@ -75,7 +89,6 @@ services:
     container_name: nginx
     volumes:
       - django_static:/usr/share/nginx/html/static
-      - vue_dst:/usr/share/nginx/html
     restart: unless-stopped
     depends_on: 
       - django
@@ -88,7 +101,6 @@ services:
 
 volumes:
   django_static:
-  vue_dst:
 
 networks:
   internal:
